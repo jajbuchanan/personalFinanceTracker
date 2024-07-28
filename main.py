@@ -1,3 +1,5 @@
+import os
+import platform
 import pandas as pd
 import csv
 from datetime import datetime
@@ -106,7 +108,18 @@ def plot_transactions(df):
     plt.title("Income and Expenses Over Time")
     plt.legend()
     plt.grid(True)
-    plt.show()
+
+    # Save the plot as an image file
+    plot_path = "income_expense_plot.png"
+    plt.savefig(plot_path)
+    print("Plot saved as income_expense_plot.png")
+
+    # Convert to Windows path using wslpath
+    abs_path = os.path.abspath(plot_path)
+    windows_path = abs_path.replace("/", "\\")
+
+    # Open the plot image file using the default image viewer
+    os.system(f'explorer.exe "{windows_path}"')
 
 
 def main():
