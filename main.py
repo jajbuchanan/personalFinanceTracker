@@ -44,6 +44,7 @@ class CSV:
 
         if filtered_df.empty:
             print("No transactions found in the given date range.")
+            return None  # Return None if no transactions are found.
         else:
             print(
                 f"Transactions from {start_date.strftime(CSV.FORMAT)} to {end_date.strftime(CSV.FORMAT)}"
@@ -65,7 +66,7 @@ class CSV:
             print(f"Total Expense: ${total_expense:.2f}")
             print(f"Net Savings: ${(total_income - total_expense):.2f}")
 
-        return
+        return filtered_df
 
 
 def add():
@@ -121,7 +122,10 @@ def main():
             start_date = get_date("Enter the start date (dd-mm-yyyy): ")
             end_date = get_date("Enter the end date (dd-mm-yyyy): ")
             df = CSV.get_transactions(start_date, end_date)
-            if input("Do you want to see a plot? (y/n) ").lower() == "y":
+            if (
+                df is not None
+                and input("Do you want to see a plot? (y/n) ").lower() == "y"
+            ):
                 plot_transactions(df)
         elif choice == "3":
             print("Exiting...")
